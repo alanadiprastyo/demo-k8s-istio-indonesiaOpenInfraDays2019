@@ -33,7 +33,7 @@ speaker-qcd4d               1/1     Running   0          9m48s
 
 3. membuat configMap untuk Pool IP Load balancer
 ```
-# kubectl create -f k8s/ConfigMap-PoolIP-LB.yaml 
+# kubectl create -f k8s/k8s-metallb/ConfigMap-PoolIP-LB.yaml 
 configmap/config created
 ```
 
