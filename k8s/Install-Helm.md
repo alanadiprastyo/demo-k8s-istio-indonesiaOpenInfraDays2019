@@ -51,3 +51,34 @@ helm list
 Client: v2.14.3+g0e7f3b6
 Server: v2.14.3+g0e7f3b6
 ```
+
+5. Install Metric k8s
+```
+# helm install stable/metrics-server --set rbac.create=true --set args[0]="--kubelet-insecure-tls=true" --set args[1]="--kubelet-preferred-address-types=InternalIP" --set args[2]="--v=2" --name metrics-server
+
+# helm list
+NAME          	REVISION	UPDATED                 	STATUS  	CHART               	APP VERSION	NAMESPACE
+metrics-server	1       	Sun Oct 13 01:36:56 2019	DEPLOYED	metrics-server-2.8.8	0.3.5      	default  
+
+# kubectl top nodes
+NAME                        CPU(cores)   CPU%   MEMORY(bytes)   MEMORY%   
+master.i3datacenter.com     262m         13%    1442Mi          39%       
+worker01.i3datacenter.com   76m          7%     729Mi           41%       
+worker02.i3datacenter.com   32m          3%     956Mi           55%   
+
+# kubectl -n kube-system top pod
+NAME                                              CPU(cores)   MEMORY(bytes)   
+coredns-5c98db65d4-29mkn                          2m           9Mi             
+coredns-5c98db65d4-9hqhv                          2m           9Mi             
+etcd-master.i3datacenter.com                      43m          73Mi            
+kube-apiserver-master.i3datacenter.com            63m          341Mi           
+kube-controller-manager-master.i3datacenter.com   15m          48Mi            
+kube-proxy-mqtgc                                  6m           12Mi            
+kube-proxy-nbsl8                                  1m           12Mi            
+kube-proxy-nmjb5                                  5m           11Mi            
+kube-scheduler-master.i3datacenter.com            3m           14Mi            
+tiller-deploy-8557598fbc-tbfj6                    1m           11Mi            
+weave-net-49vb6                                   1m           76Mi            
+weave-net-qxd4j                                   2m           74Mi            
+weave-net-zhp2d                                   1m           88Mi  
+```
