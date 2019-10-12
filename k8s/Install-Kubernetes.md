@@ -37,7 +37,7 @@ sysctl -p
 sysctl: cannot stat /proc/sys/net/bridge/bridge-nf-call-ip6tables: No such file or directory
 sysctl: cannot stat /proc/sys/net/bridge/bridge-nf-call-iptables: No such file or directory
 ```
-!!! jika ada error seperti ini maka anda harus aktifkan modprob br_netfilter
+*note: jika ada error seperti ini maka anda harus aktifkan modprob br_netfilter
 
 5. Aktfiakan br_netfilter
 ```
@@ -114,3 +114,48 @@ as root:
 kubeadm join x.x.x.x:6443 --token pjizxk.b9hdimy6nyfpqf8pxxx --discovery-token-ca-cert-hash sha256:f7a77a76f6f83ebb8386401f31d52ce18af22121f3938a763b66ff4ea36d2362
 ```
 
+
+### Jalankan Perintah ini di Master node
+1. Cek jumlah node pada Cluster
+```
+# kubectl get nodes
+NAME                        STATUS   ROLES    AGE    VERSION
+master.i3datacenter.com     NotReady    master   129m   v1.15.1
+worker01.i3datacenter.com   NotReady    <none>   128m   v1.15.1
+worker02.i3datacenter.com   NotReady    <none>   128m   v1.15.1
+
+```
+*note: pada awal installasi semua node statusnya NotReady, ini disebabkan karena belum ada plugin CNI pada k8s
+
+2. Install CNI Plugin - mengunakan weave network
+```
+kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
+```
+
+3. Cek status node
+```
+# kubectl get nodes
+NAME                        STATUS   ROLES    AGE    VERSION
+master.i3datacenter.com     Ready    master   129m   v1.15.1
+worker01.i3datacenter.com   Ready    <none>   128m   v1.15.1
+worker02.i3datacenter.com   Ready    <none>   128m   v1.15.1
+```
+
+4. Cek semua pod 
+```
+# kubectl get pod --all-namespaces
+NAMESPACE     NAME                                              READY   STATUS    RESTARTS   AGE
+kube-system   coredns-5c98db65d4-29mkn                          1/1     Running   0          133m
+kube-system   coredns-5c98db65d4-9hqhv                          1/1     Running   0          133m
+kube-system   etcd-master.i3datacenter.com                      1/1     Running   0          132m
+kube-system   kube-apiserver-master.i3datacenter.com            1/1     Running   0          132m
+kube-system   kube-controller-manager-master.i3datacenter.com   1/1     Running   0          132m
+kube-system   kube-proxy-mqtgc                                  1/1     Running   0          133m
+kube-system   kube-proxy-nbsl8                                  1/1     Running   0          132m
+kube-system   kube-proxy-nmjb5                                  1/1     Running   0          132m
+kube-system   kube-scheduler-master.i3datacenter.com            1/1     Running   0          132m
+kube-system   weave-net-49vb6                                   2/2     Running   0          130m
+kube-system   weave-net-qxd4j                                   2/2     Running   0          130m
+kube-system   weave-net-zhp2d                                   2/2     Running   0          130m
+```
+*note: pastikan semua pod control plane 'Running'
