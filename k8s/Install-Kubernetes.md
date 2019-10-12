@@ -6,7 +6,7 @@ Terdapat 3 Node yaitu
 - Worker02  (worker02.i3datacenter.com)
 
 ## Set pada semua node
-- set hosts
+1. set hosts
 ```
 vi /etc/hosts
 x.x.x.x master.i3datacenter.com master
