@@ -73,7 +73,7 @@ gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg
 
 8. Install Kubeadm, Kubectl, kubelet dan kubernetes-cni
 ```
-yum install kubeadm-1.15.1 kubectl-1.15.1 kubelet-1.15.1 kubernetes-cni-0.7.5-0
+yum install kubeadm-1.15.1 kubectl-1.15.1 kubelet-1.15.1 kubernetes-cni-0.7.5-0 docker -y
 systemctl restart docker && systemctl enable docker
 systemctl restart kubelet && systemctl enable kubelet
 ```
