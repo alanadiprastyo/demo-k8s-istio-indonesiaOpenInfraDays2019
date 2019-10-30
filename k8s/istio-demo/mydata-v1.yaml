@@ -10,8 +10,8 @@ data:
   index.html: |
     <body bgcolor="green">
       <center>
-        <h1><font color="yellow">Just Me and Opensource</font></h1>
-        <h1><font color="yellow">V1</font></h1>
+        <h1><font color="yellow">Routecloud Network Indonesia</font></h1>
+        <h1><font color="yellow">Versi 1</font></h1>
       </center>
     </body>
 ---

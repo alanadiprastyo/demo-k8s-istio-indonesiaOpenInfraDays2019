@@ -4,7 +4,7 @@ metadata:
   name: myweb-vs
 spec:
   hosts:
-  - "myweb.example.com"
+  - "myweb.routecloud.net"
   gateways:
   - myweb-gateway
   http:
